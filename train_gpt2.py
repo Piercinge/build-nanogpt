@@ -223,10 +223,12 @@ torch.manual_seed(1337)
 if torch.cuda.is_available():
     torch.cuda.manual_seed(1337)
 
-train_loader = DataLoaderLite(B=16, T=1024)
+train_loader = DataLoaderLite(B=4, T=1024)
 
 torch.set_float32_matmul_precision('high')
 
+import torch._dynamo
+torch._dynamo.config.suppress_errors = True
 # get logits
 model = GPT(GPTConfig(vocab_size=50304))
 model.to(device)
